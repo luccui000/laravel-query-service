@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Factory;
+namespace App\Factory\FormRequest;
 
 use Illuminate\Foundation\Testing\WithFaker;
 
-class MaxFactory
+class DateFactory
 {
     use WithFaker;
 
-    public function __construct(public int $max = 191)
+    public function __construct()
     {
         $this->setUpFaker();
     }
+
     public function __toString(): string
     {
-        return $this->faker->text($this->max);
+        return $this->faker->dateTime();
     }
 }

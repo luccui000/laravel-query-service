@@ -56,6 +56,11 @@ return [
             'throw' => false,
         ],
 
+        'test' => [
+            'driver' => 'local',
+            'root' => '/',
+            'throw' => false,
+        ]
     ],
 
     /*

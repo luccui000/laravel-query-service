@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\ReflectionController;
+use App\Reflect\ControllerReflect;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -212,7 +212,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'ReflectionController' => ReflectionController::class,
+        'ControllerReflect' => ControllerReflect::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

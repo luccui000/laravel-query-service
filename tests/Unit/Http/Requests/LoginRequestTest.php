@@ -3,6 +3,7 @@
 namespace Tests\Unit\Http\Requests;
 
 use App\Http\Requests\LoginRequest;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 /**
@@ -35,6 +36,12 @@ final class LoginRequestTest extends TestCase
         unset($this->loginRequest);
     }
 
+    public function testLogin()
+    {
+        $args = func_get_args();
+        $this->postJson('/test', $args)
+            ->assertStatus(Response::HTTP_NOT_FOUND);
+    }
     public function testAuthorize(): void
     {
         /** @todo This test is incomplete. */

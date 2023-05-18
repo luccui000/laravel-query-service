@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\ReflectionController;
+use App\Reflect\ControllerReflect;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ReflectionController::class, fn($app) => new ReflectionController($app));
+        $this->app->bind(ControllerReflect::class, fn($app) => new ControllerReflect($app));
     }
 
     /**

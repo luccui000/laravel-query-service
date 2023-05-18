@@ -1,23 +1,39 @@
 <?php
 
-namespace App\Services;
+namespace App\Reflect;
 
-use App\Factory\DateFactory;
-use App\Factory\MaxFactory;
-use App\Factory\MinFactory;
-use App\Factory\RequiredFactory;
+use App\Factory\FormRequest\DateFactory;
+use App\Factory\FormRequest\MaxFactory;
+use App\Factory\FormRequest\MinFactory;
+use App\Factory\FormRequest\RequiredFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Request;
 
-class ReflectionFormRequest
+class RequestReflect extends BaseReflect
 {
     use WithFaker;
-    public function __construct(public $formRequest)
-    {
-        $this->getValidRule('email', $this->formRequest->rules(), 0);
+
+    public function __construct(
+        public Request $formRequest,
+        $application = null
+    ) {
+        parent::__construct($application);
     }
 
-    public function getValidRule($field, $rules, $index)
+    public function makeValidRule(): array
+    {
+        $fields = array_keys($this->getRules());
+
+        $testCases = [];
+        foreach ($fields as $field) {
+            $testCases[$field] =  $this->makeValidByField($field, $this->getRules(), 0);
+        }
+
+        return $testCases;
+    }
+
+    public function makeValidByField($field, $rules, $index): string
     {
         $rules = is_array($rules) ? $rules : explode('|', $rules);
         $min = 0;
@@ -45,5 +61,15 @@ class ReflectionFormRequest
             'min' => new MinFactory($min),
             'max' => new MaxFactory($max),
         };
+    }
+
+    private function getRules(): array
+    {
+        return $this->formRequest->rules();
+    }
+
+    public function makeClass()
+    {
+        return $this->application->make($this->formRequest);
     }
 }

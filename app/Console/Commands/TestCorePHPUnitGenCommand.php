@@ -3,15 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\LucQLController;
-use App\Http\Requests\LoginRequest;
-use App\Services\ReflectionFormRequest;
-use App\Services\ReflectionController;
+use App\Reflect\ControllerReflect;
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use PhpUnitGen\Core\CoreApplication;
 
 class TestCorePHPUnitGenCommand extends Command
 {
@@ -34,10 +27,10 @@ class TestCorePHPUnitGenCommand extends Command
      */
     public function handle(): void
     {
-        $reflectionController = new ReflectionController(app());
+        $reflectionController = new ControllerReflect(app());
         $controller = new \ReflectionClass(LucQLController::class);
         $methods = $reflectionController->getRoute($controller, 'login');
-//        $formRequest = new ReflectionFormRequest(LoginRequest::class);
+//        $formRequest = new RequestReflect(LoginRequest::class);
 
 //        dd($formRequest->getValidRule(''[
 //            'required',

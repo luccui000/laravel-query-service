@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Factory;
+namespace App\Factory\FormRequest;
 
 use Illuminate\Foundation\Testing\WithFaker;
 
